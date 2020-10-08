@@ -3,6 +3,7 @@ from lib.database import mycursor, mydb
 from test_get import *
 
 PRODUCTS = [{"name": prod_name, "url": prod_image_url, "score": prod_nutri_score}]
+# PRODUCTS = [(prod_name, prod_image_url, prod_nutri_score)]
 
 class Products:
     """op project Openfoodfacts products"""
