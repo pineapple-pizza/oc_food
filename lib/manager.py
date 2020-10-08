@@ -2,7 +2,7 @@ from lib.queries import products, categories, cat_products, QUERY_ADD_PROD, QUER
 from lib.database import mycursor, mydb
 from test_get import *
 
-PRODUCTS = [(prod_name, prod_image_url, prod_nutri_score)]
+PRODUCTS = [{"name": prod_name, "url": prod_image_url, "score": prod_nutri_score}]
 
 class Products:
     """op project Openfoodfacts products"""
@@ -13,10 +13,15 @@ class Products:
         self.nutrition_grade = nutrition_grade
 
     def add_product():
-        mycursor.executemany(QUERY_ADD_PROD, PRODUCTS)
-        mydb.commit()
+        for product in PRODUCTS: 
+            name = product.get("name")
+            url = product.get("url")
+            score = product.get("score")
+            
+            mycursor.execute(QUERY_ADD_PROD, params=(name, url, score))
+            mydb.commit()
 
-        print(mycursor.rowcount, "records inserted")
+            print(mycursor.rowcount, "records inserted:", name)
 
 class Categories:
     """op project Openfoodfacts categories"""

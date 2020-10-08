@@ -23,9 +23,9 @@ CREATE_CAT_PROD_TABLE = ("CREATE TABLE Cat_products (id INT NOT NULL AUTO_INCREM
 
 QUERY_ADD_CAT = ("INSERT INTO Categories(name, url) VALUES (%s,%s)")
 
-QUERY_ADD_CAT_PROD = ("INSERT INTO Cat_products(cat_id, prod_id) VALUES (%s,%s)")
+QUERY_ADD_CAT_PROD = ("INSERT INTO Cat_products(cat_id, prod_id) VALUES(%s,%s)")
 
-QUERY_ADD_PROD = ("INSERT INTO Products(name, url, nutrition_grade) VALUES (%s,%s,%s)")
+QUERY_ADD_PROD = ("INSERT INTO Products(name, url, nutrition_grade) VALUES (%s, %s, %s)")
 
 products = [("coffee", "url_coffee.com", 1),
             ("tea", "url_tea.com", 2),
