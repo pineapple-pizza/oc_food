@@ -6,7 +6,7 @@ config = {
   'host' : "localhost",
   'user' : "root",
   'password' : "root",
-  'database' : "test123"
+  'database' : "openfoodfacts"
 }
 
 mydb = mysql.connector.connect(**config)
@@ -19,7 +19,7 @@ TABLES = {
   'Cat_products' : CREATE_CAT_PROD_TABLE
 }
 
-DB_NAME = 'test123'
+DB_NAME = 'openfoodfacts'
 
 class Database:
     """op project Openfoodfacts database"""
