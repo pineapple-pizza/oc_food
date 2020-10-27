@@ -1,6 +1,7 @@
-from lib.queries import cat_products, QUERY_ADD_PROD, QUERY_ADD_CAT, QUERY_ADD_CAT_PROD
-from lib.database import mycursor, mydb
+from lib.queries import CREATE_CAT_TABLE, CREATE_PROD_TABLE, CREATE_CAT_PROD_TABLE, cat_products, QUERY_ADD_PROD, QUERY_ADD_CAT, QUERY_ADD_CAT_PROD, QUERY_GET_PRODS, QUERY_GET_PROD_NUTRI, QUERY_SEARCH_NAME, QUERY_GET_CATS, QUERY_COMPARE_SCORE, QUERY_UPDATE_PROD
+from lib.database import mycursor, mydb, DB_NAME
 import requests
+from tabulate import tabulate
 
 products_URL = "https://fr-en.openfoodfacts.org/category/oat-flakes.json"
 categories_URL = "https://world.openfoodfacts.org/categories.json"
@@ -13,11 +14,13 @@ class Products:
         self.url = url
         self.nutriscore_score = nutrition_grade
 
-    def add_product():
-        results = requests.get(url = products_URL) 
+    def add_product(products_URL):
+        """add products with value (category name from openfoodfacts)"""
+        results = requests.get("https://fr-en.openfoodfacts.org/category/" + products_URL + ".json") 
         data = results.json() 
         products = data['products']
-
+        mycursor.execute("USE {}".format(DB_NAME))
+        
         for i in range(len(products)):
             if products[i]['nutriscore_score'] and products[i]['image_front_url']:
                 all_products = [(products[i]['product_name'], products[i]['image_front_url'], products[i]['nutriscore_score'])]
@@ -26,27 +29,50 @@ class Products:
         print(mycursor.rowcount, "records inserted")
 
     def get_products():
-        mycursor.execute("SELECT * FROM Products")
+        """get request all products"""
+        mycursor.execute("USE {}".format(DB_NAME))
+        mycursor.execute(QUERY_GET_PRODS)
         myresult = mycursor.fetchall()
 
-        for x in myresult:
-            print(x)
+        print(tabulate(myresult, headers = mycursor.column_names, tablefmt='fancy_grid'))
 
     def get_prod(nutri):
+        """get product with value (nutriscore)"""
         val = int(nutri)
-        mycursor.execute("SELECT * FROM Products WHERE nutrition_grade="+ str(nutri))
+        mycursor.execute("USE {}".format(DB_NAME))
+        mycursor.execute(QUERY_GET_PROD_NUTRI+ str(nutri))
         myresult = mycursor.fetchall()
 
-        for x in myresult:
-            print(x)
+        print(tabulate(myresult, headers = mycursor.column_names, tablefmt='fancy_grid'))
 
     def search_by_name(value):
+        """search product with value (name)"""
         val = str(value)
-        mycursor.execute("SELECT * FROM Products WHERE name LIKE %s", ("%" + val + "%",))
+        mycursor.execute("USE {}".format(DB_NAME))
+        mycursor.execute(QUERY_SEARCH_NAME, ("%" + val + "%",))
         myresult = mycursor.fetchall()
 
-        for x in myresult:
-            print(x)
+        print(tabulate(myresult, headers = mycursor.column_names, tablefmt='fancy_grid'))
+
+    def compare_by_score(nutri):
+        """compare products with value (nutriscore superior or egal value)"""
+        val = int(nutri)
+        mycursor.execute("USE {}".format(DB_NAME))
+        mycursor.execute(QUERY_COMPARE_SCORE+ str(nutri))
+        myresult = mycursor.fetchall()
+
+        print(tabulate(myresult, headers = mycursor.column_names, tablefmt='fancy_grid'))
+
+    def update_sub(first_id, second_id):
+        """update substitut column with values (id 1, id 2)"""
+        first_val = int(first_id)
+        second_val = int(second_id)
+
+        mycursor.execute("USE {}".format(DB_NAME))
+        mycursor.execute(QUERY_UPDATE_PROD, (first_val, second_val))
+        mydb.commit()
+
+        print(mycursor.rowcount, "record(s) affected")
 
 class Categories:
     """op project Openfoodfacts categories"""
@@ -54,32 +80,22 @@ class Categories:
         self.cat_id = cat_id
         self.name = name
 
-    def add_categories():
-        # cat_test = [("oat-flakes"), ("wheat-breads")]
-
-        # cat_results = requests.get(url = categories_URL)
-        # data = cat_results.json()
-        # categories = data['tags']
-
-        # for i in range(len(categories)):
-        #     if categories[i]['name'] == "oat-flakes":
-        #         cat_test = [(categories[i]['name'])]
-
-        #         mycursor.executemany(QUERY_ADD_CAT, cat_test)
-        #         print(cat_test)
-        oat = ('oat-flakes')
-        bread = ('wheat-breads')
-        mycursor.execute(QUERY_ADD_CAT, (bread, ))
+    def add_categories(value):
+        """add category with value"""
+        val = str(value)
+        mycursor.execute("USE {}".format(DB_NAME))
+        mycursor.execute(QUERY_ADD_CAT, (val, ))
         mydb.commit()
 
         print(mycursor.rowcount, "records inserted")
 
     def get_categories():
-        mycursor.execute("SELECT * FROM Categories")
+        """get request all categories"""
+        mycursor.execute("USE {}".format(DB_NAME))
+        mycursor.execute(QUERY_GET_CATS)
         myresult = mycursor.fetchall()
 
-        for x in myresult:
-            print(x)
+        print(tabulate(myresult, headers = mycursor.column_names, tablefmt='fancy_grid'))
 
 class Cat_products:
     """op project Openfoodfacts categories"""
@@ -88,6 +104,7 @@ class Cat_products:
         self.prod_id = prod_id
 
     def add_cat_prod():
+        mycursor.execute("USE {}".format(DB_NAME))
         mycursor.executemany(QUERY_ADD_CAT_PROD, cat_products)
         mydb.commit()
 

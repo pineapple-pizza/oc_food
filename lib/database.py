@@ -2,11 +2,12 @@ import mysql.connector
 
 from lib.queries import CREATE_DB, CREATE_CAT_TABLE, CREATE_PROD_TABLE, CREATE_CAT_PROD_TABLE
 
+DB_NAME = 'openfoodfacts'
+
 config = {
   'host' : "localhost",
   'user' : "root",
   'password' : "root",
-  'database' : "openfoodfacts"
 }
 
 mydb = mysql.connector.connect(**config)
@@ -19,7 +20,6 @@ TABLES = {
   'Cat_products' : CREATE_CAT_PROD_TABLE
 }
 
-DB_NAME = 'openfoodfacts'
 
 class Database:
     """op project Openfoodfacts database"""
@@ -27,10 +27,12 @@ class Database:
         self.db_name = name
 
     def create_database():
+        """creating the database"""
         mycursor.execute(CREATE_DB.format(DB_NAME))
         print("Database {} created!".format(DB_NAME))
 
     def create_tables():
+        """creating the tables"""
         mycursor.execute("USE {}".format(DB_NAME))
 
         for table_name in TABLES:
