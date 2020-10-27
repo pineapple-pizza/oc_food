@@ -1,12 +1,15 @@
 # PROJET 5 : OC FOOD FACTS
 - install python CLI ```pip3 install -e .``` <br>
 
-- use ```pycli``` + following arguments to make it work
+- use ```pycli``` + following arguments to make it work<br>
 
-> ```db``` : creation of database
-> ```tables``` : creation of tables
-> ```all_cat``` : get table categoriess
-> ```all_products``` : get table products
-> ```add_cat``` + ```Value``` = insert into table categories ('oat flakes' and 'wheat breads')
-> ```add_products``` : insert into table products
-> ```get_prod``` + ```Number``` : get products by nutriscore Number
+> ```db``` : creation of database<br>
+> ```tables``` : creation of tables<br>
+> ```all_cat``` : get table categoriess<br>
+> ```all_products``` : get table products<br>
+> ```add_cat``` + ```Value``` : insert into table categories ('oat flakes' and 'wheat breads')<br>
+> ```add_products``` + ```Value```: insert into table products (recommended category names : wheat-breads, oat-flakes, nougats)<br>
+> ```get_prod``` + ```Number``` : get products by nutriscore Number<br>
+> ```search``` + ```Value``` : search product by name<br>
+> ```compare``` + ```Value``` : compare products with value (nutriscore superior or egal value)<br>
+> ```update``` + ```Value``` + ```Value``` : substitut column with values (id 1, id 2)<br>
