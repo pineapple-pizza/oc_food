@@ -2,7 +2,7 @@ import mysql.connector
 
 from lib.queries import CREATE_DB, CREATE_CAT_TABLE, CREATE_PROD_TABLE, CREATE_CAT_PROD_TABLE
 
-DB_NAME = 'openfoodfacts'
+DB_NAME = 'tryingsomething'
 
 config = {
   'host' : "localhost",

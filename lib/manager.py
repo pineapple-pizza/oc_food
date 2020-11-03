@@ -65,11 +65,10 @@ class Products:
 
     def update_sub(first_id, second_id):
         """update substitut column with values (id 1, id 2)"""
-        first_val = int(first_id)
-        second_val = int(second_id)
+        params = (int(first_id), int(second_id))
 
         mycursor.execute("USE {}".format(DB_NAME))
-        mycursor.execute(QUERY_UPDATE_PROD, (first_val, second_val))
+        mycursor.execute(QUERY_UPDATE_PROD, params)
         mydb.commit()
 
         print(mycursor.rowcount, "record(s) affected")

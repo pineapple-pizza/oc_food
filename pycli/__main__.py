@@ -13,9 +13,6 @@ def main():
     for arg_second in argSecond:
         val = arg_second
 
-    for arg_third in argThird:
-        val_third = arg_third
-
     for arg in args:
         """creating the database"""
         if arg == 'db':
@@ -67,10 +64,10 @@ def main():
 
         """update substitut column with values (id 1, id 2)"""
         if arg == 'update':
-            Products.update_sub(val, val_third)
+            Products.update_sub(argSecond[0], argThird[0])
             print('passed argument : {}'.format(arg))
-            print('first id : {} '.format(arg_second))
-            print('second id : {} '.format(arg_third))
+            print('first id : {} '.format(argSecond[0]))
+            print('second id : {} '.format(argThird[0]))
 
 if __name__ == '__main__':
     main()
