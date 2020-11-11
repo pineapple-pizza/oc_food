@@ -68,6 +68,17 @@ def main():
             print('passed argument : {}'.format(arg))
             print('first id : {} '.format(argSecond[0]))
             print('second id : {} '.format(argThird[0]))
+            
+        """get request all cat_products"""
+        if arg == 'all_cat_products':
+            Cat_products.get_cat_products()
+            print('passed argument : {}'.format(arg))
 
+        """add 1 row of cat_products (catId, prodId)"""
+        if arg == '1_cat_product':
+            Cat_products.add_cat_prod(argSecond[0], argThird[0])
+            print('passed argument : {}'.format(arg))
+            print('cat id : {} '.format(argSecond[0]))
+            print('prod id : {} '.format(argThird[0]))
 if __name__ == '__main__':
     main()

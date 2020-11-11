@@ -25,6 +25,8 @@ QUERY_ADD_CAT = "INSERT INTO Categories(name) VALUES(%s)"
 
 QUERY_ADD_CAT_PROD = ("INSERT INTO Cat_products(cat_id, prod_id) VALUES(%s,%s)")
 
+QUERY_GET_CAT_PRODS = "SELECT * FROM Cat_products"
+
 QUERY_ADD_PROD = "INSERT INTO Products(name, url, nutrition_grade) VALUES (%s, %s, %s)"
 
 QUERY_GET_PRODS = "SELECT * FROM Products"
@@ -38,37 +40,3 @@ QUERY_COMPARE_SCORE = "SELECT * FROM Products WHERE nutrition_grade<="
 QUERY_UPDATE_PROD = "UPDATE Products SET substitut = %s WHERE prod_id = %s"
 
 QUERY_GET_CATS = "SELECT * FROM Categories"
-
-cat_products = [(2, 1),
-                (2, 2),
-                (2, 3),
-                (2, 4),
-                (2, 5),
-                (2, 6),
-                (2, 7),
-                (2, 8),
-                (2, 9),
-                (2, 10),
-                (2, 11),
-                (2, 12),
-                (2, 13),
-                (2, 14),
-                (2, 15),
-                (2, 16),
-                (2, 17),
-                (2, 18),
-                (1, 19),
-                (1, 20),
-                (1, 21),
-                (1, 22),
-                (1, 23),
-                (1, 24),
-                (1, 25),
-                (1, 26),
-                (1, 27),
-                (1, 28),
-                (1, 29),
-                (1, 30),
-                (1, 31),
-                (1, 32),
-                (1, 33),]

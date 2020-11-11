@@ -13,3 +13,5 @@
 > ```search``` + ```Value``` : search product by name<br>
 > ```compare``` + ```Value``` : compare products with value (nutriscore superior or egal value)<br>
 > ```update``` + ```Value``` + ```Value``` : substitut column with values (id 1, id 2)<br>
+> ```1_cat_product``` + ```Value``` + ```Value``` : add 1 row of cat_products (catId, prodId)<br>
+> ```all_cat_products``` : get request all cat_products<br>

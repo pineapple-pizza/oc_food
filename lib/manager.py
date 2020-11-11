@@ -1,4 +1,4 @@
-from lib.queries import CREATE_CAT_TABLE, CREATE_PROD_TABLE, CREATE_CAT_PROD_TABLE, cat_products, QUERY_ADD_PROD, QUERY_ADD_CAT, QUERY_ADD_CAT_PROD, QUERY_GET_PRODS, QUERY_GET_PROD_NUTRI, QUERY_SEARCH_NAME, QUERY_GET_CATS, QUERY_COMPARE_SCORE, QUERY_UPDATE_PROD
+from lib.queries import CREATE_CAT_TABLE, CREATE_PROD_TABLE, CREATE_CAT_PROD_TABLE, cat_products, QUERY_ADD_PROD, QUERY_ADD_CAT, QUERY_ADD_CAT_PROD, QUERY_GET_PRODS, QUERY_GET_PROD_NUTRI, QUERY_SEARCH_NAME, QUERY_GET_CATS, QUERY_COMPARE_SCORE, QUERY_UPDATE_PROD, QUERY_GET_CAT_PRODS
 from lib.database import mycursor, mydb, DB_NAME
 import requests
 from tabulate import tabulate
@@ -97,14 +97,24 @@ class Categories:
         print(tabulate(myresult, headers = mycursor.column_names, tablefmt='fancy_grid'))
 
 class Cat_products:
-    """op project Openfoodfacts categories"""
+    """op project Openfoodfacts cat_products"""
     def __init__(self, cat_id, prod_id):
         self.cat_id = cat_id
         self.prod_id = prod_id
-
-    def add_cat_prod():
+        
+    def add_cat_prod(catId, prodId):
+        """add 1 row of cat_products (catId, prodId)"""
+        params = (int(catId), int(prodId))
         mycursor.execute("USE {}".format(DB_NAME))
-        mycursor.executemany(QUERY_ADD_CAT_PROD, cat_products)
+        mycursor.execute(QUERY_ADD_CAT_PROD, params)
         mydb.commit()
 
         print(mycursor.rowcount, "records inserted")
+        
+    def get_cat_products():
+        """get request all categories"""
+        mycursor.execute("USE {}".format(DB_NAME))
+        mycursor.execute(QUERY_GET_CAT_PRODS)
+        myresult = mycursor.fetchall()
+
+        print(tabulate(myresult, headers = mycursor.column_names, tablefmt='fancy_grid'))
