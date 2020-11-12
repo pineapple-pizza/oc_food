@@ -3,9 +3,6 @@ from lib.database import mycursor, mydb, DB_NAME
 import requests
 from tabulate import tabulate
 
-# products_URL = "https://fr-en.openfoodfacts.org/category/oat-flakes.json"
-# categories_URL = "https://world.openfoodfacts.org/categories.json"
-
 class Products:
     """op project Openfoodfacts products"""
     def __init__(self, prod_id, name, url, nutrition_grade):
